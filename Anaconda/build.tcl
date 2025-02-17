@@ -87,6 +87,6 @@ if {($tcl_platform(os) == "Linux")} {
     append output "copy /Y src\\sdds\\sddsdata8.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.8"
     puts $output
     puts "\nThen run in the cygwin windows:"
-    puts "rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
+    puts "rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py src/sdds/sddsdata.pyd [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
     exec cygstart cmd.exe "/K" C:\\Users\\solid\\miniconda3\\Scripts\\activate.bat C:\\Users\\solid\\miniconda3
 }
