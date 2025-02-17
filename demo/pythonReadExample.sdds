@@ -1,0 +1,74 @@
+SDDS1
+&description text=text, contents=contents, &end
+&parameter name=ShortP, type=short, &end
+&parameter name=LongP, type=long, &end
+&parameter name=FloatP, type=float, &end
+&parameter name=DoubleP, type=double, &end
+&parameter name=StringP, type=string, &end
+&parameter name=CharacterP, type=character, &end
+&array name=ShortA, type=short,  &end
+&array name=LongA, type=long,  &end
+&array name=FloatA, type=float, dimensions=2,  &end
+&array name=DoubleA, type=double,  &end
+&array name=StringA, type=string,  &end
+&array name=CharacterA, type=character,  &end
+&column name=ShortC, type=short,  &end
+&column name=LongC, type=long,  &end
+&column name=FloatC, type=float,  &end
+&column name=DoubleC, type=double,  &end
+&column name=StringC, type=string,  &end
+&column name=CharacterC, type=character,  &end
+&data mode=ascii, &end
+! page number 1
+1
+2
+ 3.29999995e+00
+ 4.400000000000000e+00
+five
+a
+6           ! 1-dimensional array ShortA:
+1 2 3 4 5 6
+5           ! 1-dimensional array LongA:
+1 2 3 4 5
+2 3           ! 2-dimensional array FloatA:
+ 1.00000000e+00  2.00000000e+00  3.00000000e+00  4.00000000e+00  5.00000000e+00  6.00000000e+00
+4           ! 1-dimensional array DoubleA:
+ 1.000000000000000e+00  2.000000000000000e+00  3.000000000000000e+00  4.000000000000000e+00
+4           ! 1-dimensional array StringA:
+one two three four
+4           ! 1-dimensional array CharacterA:
+a b c d
+                   6
+1 1  1.00000000e+00  1.000000000000000e+00 "row 1" x 
+2 2  2.00000000e+00  2.000000000000000e+00 "row 2" y 
+3 3  3.00000000e+00  3.000000000000000e+00 "row 3" z 
+4 4  4.00000000e+00  4.000000000000000e+00 "row 4" a 
+5 5  5.00000000e+00  5.000000000000000e+00 "row 5" b 
+6 6  6.00000000e+00  6.000000000000000e+00 "row 6" c 
+! page number 2
+6
+7
+ 8.80000019e+00
+ 9.800000000000001e+00
+ten
+b
+8           ! 1-dimensional array ShortA:
+1 2 3 4 5 6
+7 8
+7           ! 1-dimensional array LongA:
+1 2 3 4 5 6
+7
+2 4           ! 2-dimensional array FloatA:
+ 1.00000000e+00  2.00000000e+00  3.00000000e+00  4.00000000e+00  5.00000000e+00  6.00000000e+00
+ 7.00000000e+00  8.00000000e+00
+5           ! 1-dimensional array DoubleA:
+ 1.000000000000000e+00  2.000000000000000e+00  3.000000000000000e+00  4.000000000000000e+00  5.000000000000000e+00
+5           ! 1-dimensional array StringA:
+five six seven eight nine
+5           ! 1-dimensional array CharacterA:
+e f g h i
+                   4
+-1 -1 -1.00000000e+00 -1.000000000000000e+00 "row 1" i 
+-2 -2 -2.00000000e+00 -2.000000000000000e+00 "row 2" j 
+-3 -3 -3.59999990e+00 -3.600000000000000e+00 "row 3" k 
+-4 -4 -4.40000010e+00 -4.400000000000000e+00 "row 4" l 
