@@ -7,21 +7,26 @@ file copy -force ../LICENSE src/LICENSE
 file copy -force ../README.md src/README.md
 
 if {$tcl_platform(os) == "Linux"} {
-    set binDir /home/oxygen/SOLIDAY/miniconda3/bin
+    set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Linux-x86_64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "x86_64")} {
-    set binDir /Users/soliday/miniconda3/bin
+    set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Darwin-x86_64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "arm64")} {
     set pyreq ">=3.8"
-    set binDir /Users/soliday/miniconda3/bin
+    set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Darwin-arm64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
 } else {
     set pyreq ">=3.8"
-    set binDir c:/Users/solid/miniconda3/Scripts
+    if {[info exists env(USERPROFILE)]} {
+        set homeDir [join [split $env(USERPROFILE) \\] /]
+    } else {
+        set homeDir [join [split $env(HOMEDRIVE)$env(HOMEPATH) \\] /]
+    }
+    set binDir ${homeDir}/miniconda3/Scripts
     file copy -force ../bin/Windows-x86_64/sddsdata8.dll src/sdds/sddsdata8.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata9.dll src/sdds/sddsdata9.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata10.dll src/sdds/sddsdata10.pyd
