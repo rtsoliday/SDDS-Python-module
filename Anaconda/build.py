@@ -76,7 +76,7 @@ if system == "Linux":
     run_cmd(["../../SDDS/bin/Linux-x86_64/replaceText",
              "src/conda_build_config.yaml.template", "src/conda_build_config.yaml",
              "-orig=<VER37>", "-repl=- 3.7"])
-    print("\nManually run:")
+    print("\nManually run from Anaconda directory:")
     print(f"{binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml src/meta.yaml src/setup.py src/sdds/sdds.py {get_glob_files()}")
 elif system == "Darwin" and machine == "x86_64":
     run_cmd(["../../SDDS/bin/Darwin-x86_64/replaceText",
@@ -88,7 +88,7 @@ elif system == "Darwin" and machine == "x86_64":
     run_cmd(["../../SDDS/bin/Darwin-x86_64/replaceText",
              "src/conda_build_config.yaml.template", "src/conda_build_config.yaml",
              "-orig=<VER37>", "-repl=- 3.7"])
-    print("\nManually run:")
+    print("\nManually run from Anaconda directory:")
     print(f"{binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml src/meta.yaml src/setup.py src/sdds/sdds.py {get_glob_files()}")
 elif system == "Darwin" and machine == "arm64":
     run_cmd(["../../SDDS/bin/Darwin-arm64/replaceText",
@@ -100,7 +100,7 @@ elif system == "Darwin" and machine == "arm64":
     run_cmd(["../../SDDS/bin/Darwin-arm64/replaceText",
              "src/conda_build_config.yaml.template", "src/conda_build_config.yaml",
              "-orig=<VER37>", "-repl="])
-    print("\nManually run:")
+    print("\nManually run from Anaconda directory:")
     print(f"{binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml src/meta.yaml src/setup.py src/sdds/sdds.py {get_glob_files()}")
 else:
     run_cmd(["../../SDDS/bin/Windows-x86_64/replaceText",
