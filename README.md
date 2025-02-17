@@ -12,7 +12,7 @@ The `sdds` Python module provides a high-level interface for creating, manipulat
 
 ## Requirements
 
-- Python 3.9 or higher
+- Python 3.8 or higher
 - An SDDS-compatible environment with the necessary C library dependencies (already integrated into this module).
 
 ## Installation
