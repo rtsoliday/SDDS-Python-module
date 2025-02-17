@@ -98,9 +98,17 @@ else
 	$(AR) $(LIBRARY) $(LIBRARY_OBJS)
 	$(RANLIB) $(LIBRARY)
 	cp -f $@ $(LIB_DIR)/
+	
+ifeq ($(OS), Linux)
  $(PYTHON_SHARED_LIBRARY): $(LIBRARY_OBJS)
 	$(CCC) -o $@ -shared -fPIC -Wl,-h$@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_SYS_LIBS)
 	cp -f $@ $(LIB_DIR)/
+endif
+ifeq ($(OS), Darwin)
+ $(PYTHON_SHARED_LIBRARY): $(LIBRARY_OBJS)
+	$(CCC) -fPIC -dynamiclib -flat_namespace -o $@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_SYS_LIBS)
+	cp -f $@ $(LIB_DIR)/
+endif
 
 endif
 

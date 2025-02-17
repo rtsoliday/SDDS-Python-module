@@ -66,7 +66,7 @@ def main():
         shutil.copy(os.path.join("..", "lib", "Darwin-arm64", "libsddsdata.so"),
                     os.path.join("src", "sdds", "sddsdata.so"))
         cmd = [
-            os.path.join("..", "..", "SDDS", "bin", "Darwin-64", "replaceText"),
+            os.path.join("..", "..", "SDDS", "bin", "Darwin-arm64", "replaceText"),
             "src/pyproject.toml.template",
             "src/pyproject.toml",
             "-orig=<PYVERSION>,<PYREQPYVER>,<PYFILES>",
@@ -127,8 +127,9 @@ def main():
               "soliday.sdds.egg-info",
               os.path.join("dist", output_file)]:
         remove_path(f)
-            
+
     pkg_path = os.path.abspath(os.path.join("dist", output_file))
+    pkg_path = f"{pkg_path[:-7]}{tag}.whl"
     print(f"\nPyPI Package {pkg_path} created")
     print("Upload to PyPI.org using command:")
     print(f"{os.path.join(binDir, 'python3')} -m twine upload --verbose {pkg_path}")
