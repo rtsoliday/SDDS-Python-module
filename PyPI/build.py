@@ -47,9 +47,11 @@ def main():
     current_os = sys.platform
     machine = platform.machine()
 
+
     # Platform-specific settings
     if current_os.startswith("linux"):
-        binDir = "/home/oxygen/SOLIDAY/miniconda3/bin"
+        home_dir = os.path.expanduser("~")
+        binDir = os.path.join(home_dir, "miniconda3", "bin")
         tag = "manylinux_2_17_x86_64"
         python_exe = "python3"
         shutil.copy(os.path.join("..", "lib", "Linux-x86_64", "libsddsdata.so"),
@@ -58,7 +60,8 @@ def main():
         files_str = '("sdds.py", "sddsdata.so")'
 
     elif current_os == "darwin" and machine in ("x86_64", "arm64"):
-        binDir = "/Users/soliday/miniconda3/bin/"
+        home_dir = os.path.expanduser("~")
+        binDir = os.path.join(home_dir, "miniconda3", "bin")
         tag = "macosx_11_0_x86_64" if machine == "x86_64" else "macosx_11_0_arm64"
         python_exe = "python3"
         lib_dir = "Darwin-x86_64" if machine == "x86_64" else "Darwin-arm64"
@@ -68,7 +71,11 @@ def main():
         files_str = '("sdds.py", "sddsdata.so")'
 
     elif current_os.startswith("win"):
-        binDir = r"c:\Users\solid\miniconda3"
+        home_dir = os.environ.get("USERPROFILE")
+        if not home_dir:
+            home_dir = os.path.join(os.environ.get("HOMEDRIVE", ""), os.environ.get("HOMEPATH", ""))
+        binDir = os.path.join(home_dir, "miniconda3")
+        #binDir = r"c:\Users\solid\miniconda3"
         tag = "win_amd64"
         python_exe = "python.exe"
         shutil.copy(os.path.join("..", "bin", "Windows-x86_64", "sddsdata12.dll"),
