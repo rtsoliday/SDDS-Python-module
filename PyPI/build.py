@@ -35,6 +35,7 @@ def main():
     if current_os.startswith("linux"):
         binDir = "/home/oxygen/SOLIDAY/miniconda3/bin"
         tag = "manylinux_2_17_x86_64"
+        python_exe = "python3"
         shutil.copy(os.path.join("..", "lib", "Linux-x86_64", "libsddsdata.so"),
                     os.path.join("src", "sdds", "sddsdata.so"))
         cmd = [
@@ -49,6 +50,7 @@ def main():
     elif current_os == "darwin" and machine == "x86_64":
         binDir = "/Users/soliday/miniconda3/bin/"
         tag = "macosx_11_0_x86_64"
+        python_exe = "python3"
         shutil.copy(os.path.join("..", "lib", "Darwin-x86_64", "libsddsdata.so"),
                     os.path.join("src", "sdds", "sddsdata.so"))
         cmd = [
@@ -63,6 +65,7 @@ def main():
     elif current_os == "darwin" and machine == "arm64":
         binDir = "/Users/soliday/miniconda3/bin/"
         tag = "macosx_11_0_arm64"
+        python_exe = "python3"
         shutil.copy(os.path.join("..", "lib", "Darwin-arm64", "libsddsdata.so"),
                     os.path.join("src", "sdds", "sddsdata.so"))
         cmd = [
@@ -75,12 +78,13 @@ def main():
         subprocess.run(cmd, check=True)
         
     elif current_os.startswith("win"):
-        binDir = r"c:\Users\solid\miniconda3\Scripts"
+        binDir = r"c:\Users\solid\miniconda3"
         tag = "win_amd64"
+        python_exe = "python.exe"
         shutil.copy(os.path.join("..", "bin", "Windows-x86_64", "sddsdata.dll"),
                     os.path.join("src", "sdds", "sddsdata.pyd"))
         # Copy additional DLLs
-        dlls = ["SDDS1.dll", "rpnlib.dll", "mdbmth.dll", "mdblib.dll", "lzma.dll", "z.dll"]
+        dlls = ["SDDS1.dll", "rpnlib.dll", "mdbmth.dll", "mdblib.dll", "lzma.dll"]
         for dll in dlls:
             src_file = os.path.join("..", "..", "SDDS", "bin", "Windows-x86_64", dll)
             dst_file = os.path.join("src", "sdds", dll)
@@ -90,7 +94,7 @@ def main():
             "src/pyproject.toml.template",
             "src/pyproject.toml",
             "-orig=<PYVERSION>,<PYREQPYVER>,<PYFILES>",
-            f"-replacement={version},>=3.7,(\"sdds.py\", \"sddsdata.pyd\", \"SDDS1.dll\", \"rpnlib.dll\", \"mdbmth.dll\", \"mdblib.dll\", \"lzma.dll\", \"z.dll\")"
+            f"-replacement={version},>=3.7,(\"sdds.py\", \"sddsdata.pyd\", \"SDDS1.dll\", \"rpnlib.dll\", \"mdbmth.dll\", \"mdblib.dll\", \"lzma.dll\")"
         ]
         subprocess.run(cmd, check=True)
     else:
@@ -105,12 +109,12 @@ def main():
     for path in ["build", "dist", "soliday.sdds.egg-info"]:
         remove_path(path)
     
-    build_cmd = [os.path.join(binDir, "python3"), "-m", "build"]
+    build_cmd = [os.path.join(binDir, python_exe), "-m", "build"]
     build_output = run_command(build_cmd)
     print(build_output)
     # Assume the last word of build output is the package filename
     output_file = build_output.split()[-1]
-    wheel_cmd = [os.path.join(binDir, "python3"), "-m", "wheel", "tags", "--platform-tag", tag,
+    wheel_cmd = [os.path.join(binDir, python_exe), "-m", "wheel", "tags", "--platform-tag", tag,
                  os.path.join("dist", output_file)]
     run_command(wheel_cmd)
     # Clean up files
@@ -123,7 +127,6 @@ def main():
               os.path.join("sdds", "mdbmth.dll"),
               os.path.join("sdds", "mdblib.dll"),
               os.path.join("sdds", "lzma.dll"),
-              os.path.join("sdds", "z.dll"),
               "soliday.sdds.egg-info",
               os.path.join("dist", output_file)]:
         remove_path(f)
@@ -132,7 +135,7 @@ def main():
     pkg_path = f"{pkg_path[:-7]}{tag}.whl"
     print(f"\nPyPI Package {pkg_path} created")
     print("Upload to PyPI.org using command:")
-    print(f"{os.path.join(binDir, 'python3')} -m twine upload --verbose {pkg_path}")
+    print(f"{os.path.join(binDir, python_exe)} -m twine upload --verbose {pkg_path}")
         
 if __name__ == "__main__":
     main()

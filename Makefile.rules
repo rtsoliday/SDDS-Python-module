@@ -193,9 +193,9 @@ else
   PYTHON = python3
 endif
 
-PYTHON_PREFIX = $(shell $(PYTHON) -c "import sys; print(sys.prefix)")
-PYTHON_EXEC_PREFIX = $(shell $(PYTHON) -c "import sys; print(sys.exec_prefix)")
-PYTHON_VERSION  = $(shell $(PYTHON) -c "import sys; print('{}.{}'.format(*sys.version_info[:2]))")
+PYTHON_PREFIX = $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+PYTHON_EXEC_PREFIX = $(shell $(PYTHON) -c 'import sys; print(sys.exec_prefix)')
+PYTHON_VERSION = $(shell $(PYTHON) -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
 PYTHON_INCLUDE_DIRS = -I$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION) \
                       -I$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION)m \
                       -I$(PYTHON_EXEC_PREFIX)/include/python$(PYTHON_VERSION) \
@@ -285,6 +285,10 @@ ifeq ($(OS), Windows)
   LIBPRE =
   EXEEXT = .exe
   #LIB_LINK_DIRS =
+  PYTHON_PREFIX := $(subst \,/,$(PYTHON_PREFIX))
+  PYTHON_EXEC_PREFIX := $(subst \,/,$(PYTHON_EXEC_PREFIX))
+  PYTHON_VERSION := $(subst \,/,$(PYTHON_VERSION))
+  PYTHON_INCLUDE_DIRS = -I$(PYTHON_PREFIX)/include
 
 
   

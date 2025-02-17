@@ -24,8 +24,9 @@ ifeq ($(OS), Darwin)
 endif
 
 ifeq ($(OS), Windows)
-  #CFLAGS += 
-  LIBRARY_LIBS = SDDS1.lib rpnlib.lib mdbmth.lib mdblib.lib lzma.lib z.lib
+  CFLAGS += -I$(SDDS_REPO)/lzma
+  LIBRARY_LIBS = SDDS1.lib rpnlib.lib mdbmth.lib mdblib.lib lzma.lib z.lib python3.lib
+  LIB_LINK_DIRS = -LIBPATH:$(SDDS_REPO)/lib/$(OS)-$(ARCH) -LIBPATH:$(PYTHON_PREFIX)/libs
 endif
 
 include ../Makefile.build

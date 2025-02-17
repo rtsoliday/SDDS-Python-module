@@ -11,6 +11,8 @@ DIRS += ../SDDS/mdblib
 DIRS += ../SDDS/mdbmth
 DIRS += ../SDDS/rpns/code
 DIRS += ../SDDS/SDDSlib
+DIRS += ../SDDS/fftpack
+DIRS += ../SDDS/matlib
 DIRS += ../SDDS/mdbcommon
 DIRS += ../SDDS/utils
 DIRS += sdds
@@ -32,7 +34,11 @@ all: $(DIRS)
 	$(MAKE) -C $@
 ../SDDS/SDDSlib: ../SDDS/rpns/code
 	$(MAKE) -C $@
-../SDDS/mdbcommon: ../SDDS/SDDSlib
+../SDDS/fftpack: ../SDDS/SDDSlib
+	$(MAKE) -C $@
+../SDDS/matlib: ../SDDS/fftpack
+	$(MAKE) -C $@
+../SDDS/mdbcommon: ../SDDS/matlib
 	$(MAKE) -C $@
 ../SDDS/utils: ../SDDS/mdbcommon
 	$(MAKE) -C $@
