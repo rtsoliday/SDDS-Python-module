@@ -17,6 +17,7 @@ DIRS += ../SDDS/mdbcommon
 DIRS += ../SDDS/utils
 DIRS += sdds
 DIRS += PyPI
+DIRS += Anaconda
 
 .PHONY: all $(DIRS) clean distclean
 
@@ -62,10 +63,13 @@ sdds: ../SDDS/utils
 endif
 PyPI: sdds
 	$(MAKE) -C $@
+Anaconda: PyPI
+	$(MAKE) -C $@
 
 clean:
 	$(MAKE) -C sdds clean
 	$(MAKE) -C PyPI clean
+	$(MAKE) -C Anaconda clean
 
 distclean: clean
 	rm -rf bin/$(OS)-$(ARCH)
