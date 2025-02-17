@@ -42,8 +42,24 @@ all: $(DIRS)
 	$(MAKE) -C $@
 ../SDDS/utils: ../SDDS/mdbcommon
 	$(MAKE) -C $@
+ifeq ($(OS), Windows)
+sdds: ../SDDS/utils
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=8 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=9 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=10 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=11 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=12 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=13 -C $@
+else
 sdds: ../SDDS/utils
 	$(MAKE) -C $@
+endif
 PyPI: sdds
 	$(MAKE) -C $@
 

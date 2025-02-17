@@ -185,10 +185,15 @@ ifneq ($(WIN_MPI),)
   MPI_CC = FOUND
 endif
 
+ifeq ($(OS), Windows)
+ifeq ($(PY),)
+  PY = 12
+endif
+endif
 ifeq (1, $(words $(wildcard /usr/local/oag/apps/bin/linux-x86_64/oagpython3)))
   PYTHON = oagpython3
-else ifeq (1, $(words $(wildcard C:/Python312/python.exe)))
-  PYTHON = C:/Python312/python.exe
+else ifeq (1, $(words $(wildcard C:/Python3$(PY)/python.exe)))
+  PYTHON = C:/Python3$(PY)/python.exe
 else
   PYTHON = python3
 endif

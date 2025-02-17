@@ -5,7 +5,7 @@ endif
 
 include ../Makefile.rules
 
-PYTHON_SHARED_LIBRARY = sddsdata
+PYTHON_SHARED_LIBRARY = sddsdata$(PY)
 
 LIBRARY_SRC = sddsdatamodule.c
 

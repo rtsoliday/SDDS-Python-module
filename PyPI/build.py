@@ -67,7 +67,7 @@ def main():
         binDir = r"c:\Users\solid\miniconda3"
         tag = "win_amd64"
         python_exe = "python.exe"
-        shutil.copy(os.path.join("..", "bin", "Windows-x86_64", "sddsdata.dll"),
+        shutil.copy(os.path.join("..", "bin", "Windows-x86_64", "sddsdata12.dll"),
                     os.path.join("src", "sdds", "sddsdata.pyd"))
         dlls = ["SDDS1.dll", "rpnlib.dll", "mdbmth.dll", "mdblib.dll", "lzma.dll"]
         for dll in dlls:
