@@ -1,0 +1,28 @@
+from setuptools import setup, find_packages
+from pathlib import Path
+
+setup(
+    name="sdds",
+    version="<VERSION>",
+    description="Official Python interface for the SDDS (Self Describing Data Sets) format.",
+    long_description=Path("README.md").read_text(),
+    long_description_content_type="text/markdown",
+    author="Robert Soliday",
+    author_email="soliday@anl.gov",
+    url="https://www.aps.anl.gov/Accelerator-Operations-Physics/Software",
+    packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        "sdds": [<PYFILES>],  # Ensure the shared object is included
+    },
+    zip_safe=False,  # Avoid zipping the package, ensures .so works properly
+    install_requires=[],  # Add dependencies if needed
+    license="SDDS Toolkit License",
+    license_files=["LICENSE"],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: Other/Proprietary License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires=">=3.7, <3.14",
+)

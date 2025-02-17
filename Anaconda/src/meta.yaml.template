@@ -1,0 +1,38 @@
+package:
+  name: sdds
+  version: "<VERSION>"
+
+source:
+  path: .
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+requirements:
+  host:
+    - python {{ python }}
+    - pip
+  run:
+    - python {{ python }}
+    - zlib
+    <LIBGCC>
+
+test:
+  imports:
+    - sdds
+
+about:
+  home: https://www.aps.anl.gov/Accelerator-Operations-Physics/Software
+  license: SDDS Toolkit License
+  license_file: LICENSE
+  license_url: https://ops.aps.anl.gov/manuals/SDDSlib/html/LICENSE_source.html
+  summary: Official Python interface for the SDDS (Self Describing Data Sets) format.
+  description: |
+    The `sdds` Python module provides a high-level interface for creating, manipulating, and reading Self Describing Data Sets (SDDS) files, designed for scientific data storage and transfer.
+  doc_url: https://chatgpt.com/g/g-673a4a97ab448191bf044a4bc1709679-sdds-python-language-assistant
+  doc_source_url: https://ops.aps.anl.gov/manuals/SDDSlib/html/files.html
+
+extra:
+  maintainers:
+    - "Robert Soliday <soliday@anl.gov>"
