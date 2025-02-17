@@ -39,6 +39,10 @@ def main():
     # Copy sdds.py
     shutil.copy(os.path.join("..", "sdds", "sdds.py"),
                 os.path.join("src", "sdds", "sdds.py"))
+    shutil.copy(os.path.join("..", "LICENSE"),
+                os.path.join("src", "LICENSE"))
+    shutil.copy(os.path.join("..", "README.md"),
+                os.path.join("src", "README.md"))
 
     current_os = sys.platform
     machine = platform.machine()
@@ -104,6 +108,8 @@ def main():
 
     # Clean up temporary files (currently commented out)
     cleanup_files = [
+        "LICENSE",
+        "README.md",
         "pyproject.toml",
         os.path.join("sdds", "sdds.py"),
         os.path.join("sdds", "sddsdata.so"),

@@ -3,6 +3,8 @@ set version 5.7.5
 set pyreq ">=3.7"
 
 file copy -force ../sdds/sdds.py src/sdds/sdds.py
+file copy -force ../LICENSE src/LICENSE
+file copy -force ../README.md src/README.md
 
 if {$tcl_platform(os) == "Linux"} {
     set binDir /home/oxygen/SOLIDAY/miniconda3/bin
@@ -49,7 +51,7 @@ if {($tcl_platform(os) == "Linux")} {
 	src/conda_build_config.yaml \
 	-orig=<VER37> "-repl=- 3.7"
     puts "\nManually run:"
-    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
+    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/LICENSE src/README.md src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "x86_64")} {
     exec ../../SDDS/bin/Darwin-x86_64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},${files}
@@ -59,7 +61,7 @@ if {($tcl_platform(os) == "Linux")} {
 	src/conda_build_config.yaml \
 	-orig=<VER37> "-repl=- 3.7"
     puts "\nManually run:"
-    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
+    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/LICENSE src/README.md src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "arm64")} {
     exec ../../SDDS/bin/Darwin-arm64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},${files}
@@ -69,7 +71,7 @@ if {($tcl_platform(os) == "Linux")} {
 	src/conda_build_config.yaml \
 	-orig=<VER37> "-repl="
     puts "\nManually run:"
-    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
+    puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/LICENSE src/README.md src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
 } else {
     exec ../../SDDS/bin/Windows-x86_64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},(${files})
@@ -87,6 +89,6 @@ if {($tcl_platform(os) == "Linux")} {
     append output "copy /Y src\\sdds\\sddsdata8.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.8"
     puts $output
     puts "\nThen run in the cygwin windows:"
-    puts "rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py src/sdds/sddsdata.pyd [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
+    puts "rm -f src/LICENSE src/README.md src/conda_build_config.yaml src/meta.yaml src/setup.py src/sdds/sdds.py src/sdds/sddsdata.pyd [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
     exec cygstart cmd.exe "/K" C:\\Users\\solid\\miniconda3\\Scripts\\activate.bat C:\\Users\\solid\\miniconda3
 }
