@@ -41,7 +41,7 @@ if {($tcl_platform(os) == "Linux")} {
 	-orig=<VERSION>,<LIBGCC> "-repl=${version},- libgcc-ng"
     exec ../../SDDS/bin/Linux-x86_64/replaceText src/conda_build_config.yaml.template \
 	src/conda_build_config.yaml \
-	-orig=<VER37> "-repl=  - 3.7"
+	-orig=<VER37> "-repl=- 3.7"
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "x86_64")} {
     exec ../../SDDS/bin/Darwin-x86_64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},${files}
@@ -49,7 +49,7 @@ if {($tcl_platform(os) == "Linux")} {
 	-orig=<VERSION>,<LIBGCC> "-repl=${version},"
     exec ../../SDDS/bin/Darwin-x86_64/replaceText src/conda_build_config.yaml.template \
 	src/conda_build_config.yaml \
-	-orig=<VER37> "-repl=  - 3.7"
+	-orig=<VER37> "-repl=- 3.7"
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "arm64")} {
     exec ../../SDDS/bin/Darwin-arm64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},${files}
@@ -65,7 +65,7 @@ if {($tcl_platform(os) == "Linux")} {
 	-orig=<VERSION>,<LIBGCC> "-repl=${version},"
     exec ../../SDDS/bin/Windows-x64/replaceText src/conda_build_config.yaml.template \
 	src/conda_build_config.yaml \
-	-orig=<VER37> "-repl=  - 3.7"
+	-orig=<VER37> "-repl=- 3.7"
 }
 puts "\nManually run:"
 puts "${binDir}/conda-build . --package-format=.conda ; rm -f src/conda_build_config.yaml  src/meta.yaml src/setup.py src/sdds/sdds.py [glob -nocomplain src/sdds/*.dll src/sdds/*.pyd src/sdds/*.so]"
