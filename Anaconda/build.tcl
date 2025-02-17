@@ -1,3 +1,4 @@
+#!/usr/bin/env tclsh
 set version 5.7.5
 set pyreq ">=3.7"
 

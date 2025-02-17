@@ -6,7 +6,7 @@ endif
 include ../Makefile.rules
 
 all:
-	$(PYTHON) build.py
+	tclsh build.tcl
 
 clean:
 	rm -rf src/conda_build_config.yaml src/meta.yaml src/setup.py src/sdds/sdds.py src/sdds/*.so src/sdds/*.pyd src/sdds/*.dll
