@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soliday.sdds"
+version = "<PYVERSION>"
+description = "Official Python interface for the SDDS (Self Describing Data Sets) format."
+readme = "README.md"
+license = { text = "SDDS Toolkit License" }
+authors = [{ name = "Robert Soliday", email = "soliday@anl.gov" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: Other/Proprietary License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+]
+requires-python = "<PYREQPYVER>"
+
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+sdds = [<PYFILES>]
+
+[project.urls]
+Homepage = "https://www.aps.anl.gov/Accelerator-Operations-Physics/Software"
