@@ -26,7 +26,7 @@ endif
 ifeq ($(OS), Windows)
   CFLAGS += -I$(SDDS_REPO)/lzma
   LIBRARY_SYS_LIBS = $(PYTHON_PREFIX)/libs/python3.lib
-  LIBRARY_LIBS_SDDS = SDDS1.lib rpnlib.lib mdbmth.lib mdblib.lib lzma.lib z.lib 
+  LIBRARY_LIBS_SDDS = SDDS1.lib rpnlib.lib gsl.lib gslcblas.lib mdbmth.lib mdblib.lib lzma.lib z.lib 
   LIB_LINK_DIRS = -LIBPATH:$(SDDS_REPO)/lib/$(OS)-$(ARCH) -LIBPATH:$(PYTHON_PREFIX)/libs
 endif
 

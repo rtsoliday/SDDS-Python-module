@@ -1,3 +1,18 @@
+# Detect OS and Architecture
+OS := $(shell uname -s)
+ifeq ($(findstring CYGWIN, $(OS)),CYGWIN)
+    OS := Windows
+endif
+
+# Check for external gsl repository needed on Windows
+ifeq ($(OS), Windows)
+  GSL_REPO = $(wildcard ../gsl)
+  ifeq ($(GSL_REPO),)
+    $(error GSL source code not found. Run 'git clone https://github.com/rtsoliday/gsl.git' next to the SDDS-Python-module repository)
+  endif
+endif
+
+# Check for external SDDS repository
 SDDS_REPO = $(wildcard ../SDDS)
 ifeq ($(SDDS_REPO),)
   $(error SDDS source code not found. Run 'git clone https://github.com/rtsoliday/SDDS.git' next to the SDDS-Python-module repository)
@@ -5,16 +20,17 @@ endif
 
 include Makefile.rules
 
-DIRS = ../SDDS/zlib
-DIRS += ../SDDS/lzma
-DIRS += ../SDDS/mdblib
-DIRS += ../SDDS/mdbmth
-DIRS += ../SDDS/rpns/code
-DIRS += ../SDDS/SDDSlib
-DIRS += ../SDDS/fftpack
-DIRS += ../SDDS/matlib
-DIRS += ../SDDS/mdbcommon
-DIRS += ../SDDS/utils
+DIRS = $(GSL_REPO)
+DIRS += $(SDDS_REPO)/zlib
+DIRS += $(SDDS_REPO)/lzma
+DIRS += $(SDDS_REPO)/mdblib
+DIRS += $(SDDS_REPO)/mdbmth
+DIRS += $(SDDS_REPO)/rpns/code
+DIRS += $(SDDS_REPO)/SDDSlib
+DIRS += $(SDDS_REPO)/fftpack
+DIRS += $(SDDS_REPO)/matlib
+DIRS += $(SDDS_REPO)/mdbcommon
+DIRS += $(SDDS_REPO)/utils
 DIRS += sdds
 DIRS += PyPI
 DIRS += Anaconda
@@ -23,28 +39,33 @@ DIRS += Anaconda
 
 all: $(DIRS)
 
-../SDDS/zlib:
+ifneq ($(GSL_REPO),)
+  GSL_CLEAN = $(MAKE) -C $(GSL_REPO) -f Makefile.MSVC clean
+  $(GSL_REPO):
+	$(MAKE) -C $@ -f Makefile.MSVC all
+endif
+$(SDDS_REPO)/zlib:
 	$(MAKE) -C $@
-../SDDS/lzma: ../SDDS/zlib
+$(SDDS_REPO)/lzma: $(SDDS_REPO)/zlib
 	$(MAKE) -C $@
-../SDDS/mdblib: ../SDDS/lzma
+$(SDDS_REPO)/mdblib: $(SDDS_REPO)/lzma
 	$(MAKE) -C $@
-../SDDS/mdbmth: ../SDDS/mdblib
+$(SDDS_REPO)/mdbmth: $(SDDS_REPO)/mdblib
 	$(MAKE) -C $@
-../SDDS/rpns/code: ../SDDS/mdbmth
+$(SDDS_REPO)/rpns/code: $(SDDS_REPO)/mdbmth $(GSL_REPO)
 	$(MAKE) -C $@
-../SDDS/SDDSlib: ../SDDS/rpns/code
+$(SDDS_REPO)/SDDSlib: $(SDDS_REPO)/rpns/code
 	$(MAKE) -C $@
-../SDDS/fftpack: ../SDDS/SDDSlib
+$(SDDS_REPO)/fftpack: $(SDDS_REPO)/SDDSlib
 	$(MAKE) -C $@
-../SDDS/matlib: ../SDDS/fftpack
+$(SDDS_REPO)/matlib: $(SDDS_REPO)/fftpack
 	$(MAKE) -C $@
-../SDDS/mdbcommon: ../SDDS/matlib
+$(SDDS_REPO)/mdbcommon: $(SDDS_REPO)/matlib
 	$(MAKE) -C $@
-../SDDS/utils: ../SDDS/mdbcommon
+$(SDDS_REPO)/utils: $(SDDS_REPO)/mdbcommon
 	$(MAKE) -C $@
 ifeq ($(OS), Windows)
-sdds: ../SDDS/utils
+sdds: $(SDDS_REPO)/utils
 	$(MAKE) -C $@ clean
 	$(MAKE) PY=8 -C $@
 	$(MAKE) -C $@ clean
@@ -58,7 +79,7 @@ sdds: ../SDDS/utils
 	$(MAKE) -C $@ clean
 	$(MAKE) PY=13 -C $@
 else
-sdds: ../SDDS/utils
+sdds: $(SDDS_REPO)/utils
 	$(MAKE) -C $@
 endif
 PyPI: sdds
@@ -67,6 +88,7 @@ Anaconda: PyPI
 	$(MAKE) -C $@
 
 clean:
+	$(GSL_CLEAN)
 	$(MAKE) -C sdds clean
 	$(MAKE) -C PyPI clean
 	$(MAKE) -C Anaconda clean
