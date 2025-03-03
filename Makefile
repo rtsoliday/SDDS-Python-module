@@ -40,7 +40,6 @@ DIRS += Anaconda
 all: $(DIRS)
 
 ifneq ($(GSL_REPO),)
-  GSL_CLEAN = $(MAKE) -C $(GSL_REPO) -f Makefile.MSVC clean
   $(GSL_REPO):
 	$(MAKE) -C $@ -f Makefile.MSVC all
 endif
@@ -88,7 +87,6 @@ Anaconda: PyPI
 	$(MAKE) -C $@
 
 clean:
-	$(GSL_CLEAN)
 	$(MAKE) -C sdds clean
 	$(MAKE) -C PyPI clean
 	$(MAKE) -C Anaconda clean
