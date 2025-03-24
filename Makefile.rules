@@ -140,8 +140,10 @@ ICONV_LIB = $(firstword $(wildcard \
 ifneq ($(wildcard /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/aocc-4.1.0),)
   IMPROV_BUILD=1
   LZMA_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/aocc-4.1.0/xz-5.4.1-gju4bpk/lib/liblzma.so
-  HDF5_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/hdf5-1.14.2-l6qnsjk/lib/libhdf5.so
-  TIFF_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/libtiff-4.5.1-bzputfw/lib64/libtiff.so
+  HDF5_LIB = -Wl,-rpath,/gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/hdf5-1.14.2-l6qnsjk/lib
+  HDF5_LIB += /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/hdf5-1.14.2-l6qnsjk/lib/libhdf5.so
+  TIFF_LIB = -Wl,-rpath,/gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/libtiff-4.5.1-bzputfw/lib64
+  TIFF_LIB += /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/libtiff-4.5.1-bzputfw/lib64/libtiff.so
   GD_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-12.3.0/libgd-2.3.3-enxppnl/lib/libgd.so
   JPEG_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-11.4.0/libjpeg-turbo-3.0.0-hbvbijw/lib64/libjpeg.so
   FFTW3_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/aocc-4.1.0/amdfftw-4.1-dd3vgn3/lib/libfftw3.so.3.6.10
@@ -173,7 +175,8 @@ else
  LAPACK_INCLUDE = -I/usr/include/lapacke
  LAPACK_LIB = -llapack -lblas
  ifeq ($(IMPROV_BUILD),1)
-  LAPACK_LIB = /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-12.3.0/nvhpc-24.3-ksebg4i/Linux_x86_64/24.3/compilers/lib/liblapack.so
+  LAPACK_LIB = -Wl,-rpath,/gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-12.3.0/nvhpc-24.3-ksebg4i/Linux_x86_64/24.3/compilers/lib
+  LAPACK_LIB += /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-12.3.0/nvhpc-24.3-ksebg4i/Linux_x86_64/24.3/compilers/lib/liblapack.so
   LAPACK_LIB += /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/gcc-12.3.0/nvhpc-24.3-ksebg4i/Linux_x86_64/24.3/compilers/lib/libblas.so
  endif
 endif
@@ -212,6 +215,7 @@ MPI_CC = $(firstword $(wildcard \
            /usr/lib64/mpich-3.2/bin/mpicc \
            /opt/local/bin/mpicc \
            /opt/homebrew/bin/mpicc \
+           /lustre/3rdPartySoftware/mpich-4.1.1/bin/mpicc \
 	   /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/aocc-4.1.0/openmpi-5.0.1-jk5bu46/bin/mpicc ))
 MPI_CCC = $(firstword $(wildcard \
            /usr/bin/mpic++ \
@@ -227,6 +231,7 @@ MPI_CCC = $(firstword $(wildcard \
            /opt/local/bin/mpicxx \
            /opt/homebrew/bin/mpic++ \
            /opt/homebrew/bin/mpicxx \
+           /lustre/3rdPartySoftware/mpich-4.1.1/bin/mpicxx \
 	   /gpfs/fs1/soft/improv/software/spack-built/linux-rhel8-zen3/aocc-4.1.0/openmpi-5.0.1-jk5bu46/bin/mpicxx ))
 WIN_MPI = $(firstword $(wildcard \
            C:/Program\ Files/Microsoft\ MPI \
@@ -284,9 +289,14 @@ ifeq ($(OS), Linux)
   #-fPIC        Generates position-independent code, which is essential for creating shared libraries.
 
   CUSTOM_GCC_PATH = /usr/local/oag/3rdParty/gcc-11.3.0
+$(info $(MPI_CC))
   ifneq ($(wildcard $(CUSTOM_GCC_PATH)),)
     CC = $(CUSTOM_GCC_PATH)/bin/gcc
     CCC = $(CUSTOM_GCC_PATH)/bin/g++
+    ifeq ($(MPI_CC),/usr/lib64/mpich-3.2/bin/mpicc)
+      MPI_CC :=MPICH_CC=$(CUSTOM_GCC_PATH)/bin/gcc $(MPI_CC)
+      MPI_CCC :=MPICH_CXX=$(CUSTOM_GCC_PATH)/bin/g++ $(MPI_CCC)
+    endif
     AR = $(CUSTOM_GCC_PATH)/bin/gcc-ar -rc
     RANLIB = $(CUSTOM_GCC_PATH)/bin/gcc-ranlib
     F77 = $(CUSTOM_GCC_PATH)/bin/gfortran -m64 -ffixed-line-length-132
