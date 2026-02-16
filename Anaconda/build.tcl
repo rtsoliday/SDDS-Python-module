@@ -30,9 +30,7 @@ if {$tcl_platform(os) == "Linux"} {
         set homeDir [join [split $env(HOMEDRIVE)$env(HOMEPATH) \\] /]
     }
     set binDir ${homeDir}/miniconda3/Scripts
-    if {[file exists ../bin/Windows-x86_64/sddsdata14.dll]} {
-        file copy -force ../bin/Windows-x86_64/sddsdata14.dll src/sdds/sddsdata14.pyd
-    }
+    file copy -force ../bin/Windows-x86_64/sddsdata14.dll src/sdds/sddsdata14.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata8.dll src/sdds/sddsdata8.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata9.dll src/sdds/sddsdata9.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata10.dll src/sdds/sddsdata10.pyd
@@ -93,9 +91,7 @@ if {($tcl_platform(os) == "Linux")} {
 	-orig=<VER37> "-repl="
     puts "\nManually run in the new window:"
     set output ""
-    if {[file exists src/sdds/sddsdata14.pyd]} {
-        append output "copy /Y src\\sdds\\sddsdata14.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.14 & "
-    }
+    append output "copy /Y src\\sdds\\sddsdata14.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.14 & "
     append output "copy /Y src\\sdds\\sddsdata13.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.13 & "
     append output "copy /Y src\\sdds\\sddsdata12.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.12 & "
     append output "copy /Y src\\sdds\\sddsdata11.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.11 & "

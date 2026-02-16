@@ -77,6 +77,8 @@ sdds: $(SDDS_REPO)/utils
 	$(MAKE) PY=12 -C $@
 	$(MAKE) -C $@ clean
 	$(MAKE) PY=13 -C $@
+	$(MAKE) -C $@ clean
+	$(MAKE) PY=14 -C $@
 else
 sdds: $(SDDS_REPO)/utils
 	$(MAKE) -C $@

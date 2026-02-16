@@ -37,6 +37,7 @@ else:
     pyreq = ">=3.8"
     binDir = r"c:/Users/solid/miniconda3/Scripts"
     # Windows files
+    copy_force("../bin/Windows-x86_64/sddsdata14.dll", "src/sdds/sddsdata14.pyd")
     copy_force("../bin/Windows-x86_64/sddsdata8.dll", "src/sdds/sddsdata8.pyd")
     copy_force("../bin/Windows-x86_64/sddsdata9.dll", "src/sdds/sddsdata9.pyd")
     copy_force("../bin/Windows-x86_64/sddsdata10.dll", "src/sdds/sddsdata10.pyd")
@@ -112,7 +113,9 @@ else:
     run_cmd(["../../SDDS/bin/Windows-x86_64/replaceText",
              "src/conda_build_config.yaml.template", "src/conda_build_config.yaml",
              "-orig=<VER37>", "-repl="])
-    output = (
+    output = ""
+    output += f"copy /Y src\\sdds\\sddsdata14.pyd src\\sdds\\sddsdata.pyd & {binDir}/conda-build . --package-format=.conda --python=3.14 & "
+    output += (
         f"copy /Y src\\sdds\\sddsdata13.pyd src\\sdds\\sddsdata.pyd & {binDir}/conda-build . --package-format=.conda --python=3.13 & "
         f"copy /Y src\\sdds\\sddsdata12.pyd src\\sdds\\sddsdata.pyd & {binDir}/conda-build . --package-format=.conda --python=3.12 & "
         f"copy /Y src\\sdds\\sddsdata11.pyd src\\sdds\\sddsdata.pyd & {binDir}/conda-build . --package-format=.conda --python=3.11 & "
