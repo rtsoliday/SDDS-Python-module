@@ -7,15 +7,18 @@ file copy -force ../LICENSE src/LICENSE
 file copy -force ../README.md src/README.md
 
 if {$tcl_platform(os) == "Linux"} {
+    #exec make -C ../sdds
     set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Linux-x86_64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "x86_64")} {
+    #exec make -C ../sdds
     set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Darwin-x86_64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
 } elseif {($tcl_platform(os) == "Darwin") && ($tcl_platform(machine) == "arm64")} {
     set pyreq ">=3.8"
+    #exec make -C ../sdds
     set binDir $env(HOME)/miniconda3/bin
     file copy -force ../lib/Darwin-arm64/libsddsdata.so src/sdds/sddsdata.so
     set files {"sddsdata.so"}
@@ -27,6 +30,9 @@ if {$tcl_platform(os) == "Linux"} {
         set homeDir [join [split $env(HOMEDRIVE)$env(HOMEPATH) \\] /]
     }
     set binDir ${homeDir}/miniconda3/Scripts
+    if {[file exists ../bin/Windows-x86_64/sddsdata14.dll]} {
+        file copy -force ../bin/Windows-x86_64/sddsdata14.dll src/sdds/sddsdata14.pyd
+    }
     file copy -force ../bin/Windows-x86_64/sddsdata8.dll src/sdds/sddsdata8.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata9.dll src/sdds/sddsdata9.pyd
     file copy -force ../bin/Windows-x86_64/sddsdata10.dll src/sdds/sddsdata10.pyd
@@ -51,7 +57,7 @@ if {($tcl_platform(os) == "Linux")} {
     exec ../../SDDS/bin/Linux-x86_64/replaceText src/setup.py.template src/setup.py \
 	-orig=<VERSION>,<PYFILES> -repl=${version},${files}
     exec ../../SDDS/bin/Linux-x86_64/replaceText src/meta.yaml.template src/meta.yaml \
-	-orig=<VERSION>,<LIBGCC> "-repl=${version},- libgcc-ng"
+    -orig=<VERSION>,<LIBGCC> "-repl=${version},- libgcc"
     exec ../../SDDS/bin/Linux-x86_64/replaceText src/conda_build_config.yaml.template \
 	src/conda_build_config.yaml \
 	-orig=<VER37> "-repl=- 3.7"
@@ -86,7 +92,11 @@ if {($tcl_platform(os) == "Linux")} {
 	src/conda_build_config.yaml \
 	-orig=<VER37> "-repl="
     puts "\nManually run in the new window:"
-    set output "copy /Y src\\sdds\\sddsdata13.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.13 & "
+    set output ""
+    if {[file exists src/sdds/sddsdata14.pyd]} {
+        append output "copy /Y src\\sdds\\sddsdata14.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.14 & "
+    }
+    append output "copy /Y src\\sdds\\sddsdata13.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.13 & "
     append output "copy /Y src\\sdds\\sddsdata12.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.12 & "
     append output "copy /Y src\\sdds\\sddsdata11.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.11 & "
     append output "copy /Y src\\sdds\\sddsdata10.pyd src\\sdds\\sddsdata.pyd & ${binDir}/conda-build . --package-format=.conda --python=3.10 & "

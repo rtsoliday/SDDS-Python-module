@@ -7,15 +7,24 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script:
+    - "{{ PYTHON }} -m pip install . --no-deps -vv"
+    - "patchelf --set-rpath '$ORIGIN/../../..' ${SP_DIR}/sdds/sddsdata.so"  # [linux]
+    - "patchelf --replace-needed /lib64/libgsl.so.23 libgsl.so.27 ${SP_DIR}/sdds/sddsdata.so || true"  # [linux]
+    - "patchelf --replace-needed libgsl.so.23 libgsl.so.27 ${SP_DIR}/sdds/sddsdata.so || true"  # [linux]
+    - "patchelf --replace-needed /lib64/libgslcblas.so.0 libgslcblas.so.0 ${SP_DIR}/sdds/sddsdata.so || true"  # [linux]
 
 requirements:
   host:
     - python {{ python }}
     - pip
+    - gsl
+    - patchelf  # [linux]
   run:
     - python {{ python }}
-    - zlib
+    - gsl
+    - xz
+    - libzlib
     <LIBGCC>
 
 test:

@@ -149,14 +149,14 @@ else
 	
 ifeq ($(OS), Linux)
  $(PYTHON_SHARED_LIBRARY): $(LIBRARY_OBJS)
-	$(CCC) -o $@ -shared -fPIC -Wl,-h$@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_SYS_LIBS)
+	$(CCC) -o $@ -shared -fPIC -Wl,-h$@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_LIBS_SDDS) $(LIBRARY_SYS_LIBS)
 	cp -f $@ $(LIB_DIR)/
 	@if [ -n "$(EPICS_LIB_DIR)" ]; then echo cp -f $@ $(EPICS_LIB_DIR)/; fi
 	@if [ -n "$(EPICS_LIB_DIR)" ]; then cp -f $@ $(EPICS_LIB_DIR)/; fi
 endif
 ifeq ($(OS), Darwin)
  $(PYTHON_SHARED_LIBRARY): $(LIBRARY_OBJS)
-	$(CCC) -fPIC -dynamiclib -flat_namespace -o $@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_SYS_LIBS)
+	$(CCC) -fPIC -dynamiclib -flat_namespace -o $@ $(LDFLAGS) $(LIBRARY_OBJS) $(LIBRARY_LIBS) $(LIBRARY_LIBS_SDDS) $(LIBRARY_SYS_LIBS)
 	cp -f $@ $(LIB_DIR)/
 	@if [ -n "$(EPICS_LIB_DIR)" ]; echo cp -f $@ $(EPICS_LIB_DIR)/; fi
 	@if [ -n "$(EPICS_LIB_DIR)" ]; cp -f $@ $(EPICS_LIB_DIR)/; fi

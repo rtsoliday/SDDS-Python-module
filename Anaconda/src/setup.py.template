@@ -24,5 +24,5 @@ setup(
         "License :: OSI Approved :: Other/Proprietary License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.7, <3.14",
+    python_requires=">=3.7, <3.15",
 )
