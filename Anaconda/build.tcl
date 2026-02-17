@@ -1,5 +1,5 @@
 #!/usr/bin/env tclsh
-set version 5.7.5
+set version 5.7.6
 set pyreq ">=3.7"
 
 file copy -force ../sdds/sdds.py src/sdds/sdds.py
