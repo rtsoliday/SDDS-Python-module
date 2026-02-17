@@ -24,7 +24,7 @@ requirements:
     - python >=3.8,<3.15
     - gsl >=2.7,<3
     - xz
-    - libzlib
+    - zlib
     <LIBGCC>
 
 test:
