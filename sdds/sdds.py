@@ -9,11 +9,34 @@ Dependencies:
     sddsdata module
 """
 
-try:
-    from . import sddsdata
-except:
-    import sddsdata
+import importlib
+import os
 import sys
+
+if sys.platform.startswith("win") and hasattr(os, "add_dll_directory"):
+    os.add_dll_directory(os.path.dirname(__file__))
+
+def _load_sddsdata_module():
+    try:
+        from . import sddsdata as module
+        return module
+    except Exception:
+        if sys.platform.startswith("win"):
+            versioned_name = f"sddsdata{sys.version_info.minor}"
+            try:
+                return importlib.import_module(f".{versioned_name}", __package__)
+            except Exception:
+                try:
+                    return importlib.import_module(versioned_name)
+                except Exception:
+                    pass
+        try:
+            import sddsdata as module
+            return module
+        except Exception as second_error:
+            raise ImportError("Unable to load SDDS binary module") from second_error
+
+sddsdata = _load_sddsdata_module()
 import time
 from dataclasses import dataclass
 from typing import Optional, Any

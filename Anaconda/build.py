@@ -5,7 +5,7 @@ import shutil
 import subprocess
 import glob
 
-version = "5.7.5"
+version = "5.7.6"
 pyreq = ">=3.7"
 
 def copy_force(src, dst):

@@ -21,10 +21,10 @@ requirements:
     - gsl
     - patchelf  # [linux]
   run:
-    - python {{ python }}
-    - gsl
+    - python >=3.8,<3.15
+    - gsl >=2.7,<3
     - xz
-    - zlib
+    - libzlib
     <LIBGCC>
 
 test:
