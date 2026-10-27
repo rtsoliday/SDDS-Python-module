@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := all
 # Detect OS and Architecture
 OS := $(shell uname -s)
 ifeq ($(findstring CYGWIN, $(OS)),CYGWIN)
@@ -18,8 +19,9 @@ ifeq ($(SDDS_REPO),)
   $(error SDDS source code not found. Run 'git clone https://github.com/rtsoliday/SDDS.git' next to the SDDS-Python-module repository)
 endif
 
+ENABLE_OPENMP ?= 1
+BUNDLE_OPENMP ?= 1
 include Makefile.rules
-
 DIRS = $(GSL_REPO)
 DIRS += $(SDDS_REPO)/zlib
 DIRS += $(SDDS_REPO)/lzma

@@ -1,10 +1,12 @@
+.DEFAULT_GOAL := all
 SDDS_REPO = $(firstword $(wildcard ../../SDDS ../../../../../epics/extensions/src/SDDS))
 ifeq ($(SDDS_REPO),)
   $(error SDDS source code not found. Run 'git clone https://github.com/rtsoliday/SDDS.git' next to the SDDS-Python-module repository)
 endif
 
+ENABLE_OPENMP ?= 1
+BUNDLE_OPENMP ?= 1
 include ../Makefile.rules
-
 PYTHON_SHARED_LIBRARY = sddsdata$(PY)
 
 LIBRARY_SRC = sddsdatamodule.c
@@ -30,5 +32,11 @@ ifeq ($(OS), Windows)
   LIB_LINK_DIRS += -LIBPATH:$(SDDS_REPO)/lib/$(OS)-$(ARCH) -LIBPATH:$(PYTHON_PREFIX)/libs
 endif
 
+ifneq ($(OS),Windows)
+LIBRARY_LIBS += $(LIBRARY_LIBS_SDDS)
+endif
+ifeq ($(OS),Linux)
+LIBRARY_SYS_LIBS += -fopenmp
+endif
 include ../Makefile.build
-
+$(BUILD_GENERATED): | $(OBJ_DIR)
